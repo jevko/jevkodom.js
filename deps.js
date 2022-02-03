@@ -1,0 +1,1 @@
+export * as jevkoutils from 'https://cdn.jsdelivr.net/gh/jevko/jevkoutils.js@v0.1.2/mod.js'
