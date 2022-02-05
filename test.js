@@ -1,4 +1,5 @@
 import {parseJevko} from 'https://cdn.jsdelivr.net/gh/jevko/parsejevko.js@v0.1.3/mod.js'
+import { j2e } from './j2e.js'
 
 import { jevkoToElements } from './mod.js'
 
@@ -49,3 +50,21 @@ const assert = (...args) => {
 }
 
 assert(document.querySelector('[lang=fr]').textContent === "c'est la vie")
+
+const elems = j2e(parseJevko(`[html][
+  [head][
+    [title][This is a title]
+  ]
+  [body][
+    [div][
+      [p][Hello world!]
+      [id[anId] class[jargon] style[color: purple;] title[Hypertext Markup Language] abbr][HTML]
+      [href[https://www.wikipedia.org/] a][A link to Wikipedia!]
+      [p][Oh well, [lang[fr] span][c'est la vie], as they say in France.]
+    ]
+  ]
+]`))
+
+console.log(elems)
+
+document.body.append(...elems)
