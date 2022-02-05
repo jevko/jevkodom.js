@@ -2,7 +2,7 @@ import {jevkoutils} from './deps.js'
 
 const { trim3 } = jevkoutils
 
-export const j2e = (jevko) => {
+export const jevkoToNodes = (jevko) => {
   const {subjevkos, suffix} = jevko
 
   let mode = 'text'
@@ -10,7 +10,7 @@ export const j2e = (jevko) => {
   let ret = []
   for (const {prefix, jevko} of subjevkos) {
     if (mode === 'text') {
-      [tag, attrs] = tag2e(jevko)
+      [tag, attrs] = jevkoToTagAttrs(jevko)
       ret.push(document.createTextNode(prefix))
       // ignore self-closing for now
       mode = 'content'
@@ -20,7 +20,7 @@ export const j2e = (jevko) => {
       for (const [k, v] of attrs) {
         el.setAttribute(k, v)
       }
-      el.append(...j2e(jevko))
+      el.append(...jevkoToNodes(jevko))
       ret.push(el)
       mode = 'text'
     }
@@ -29,7 +29,7 @@ export const j2e = (jevko) => {
   return ret
 }
 
-const tag2e = (jevko) => {
+const jevkoToTagAttrs = (jevko) => {
   const {subjevkos, suffix} = jevko
 
   const [pre, tag, post] = trim3(suffix)
@@ -37,14 +37,14 @@ const tag2e = (jevko) => {
 
   for (const {prefix, jevko} of subjevkos) {
     const [pre, mid, post] = trim3(prefix)
-    attrs.push([mid, at2e(jevko)])
+    attrs.push([mid, jevkoToAttrValue(jevko)])
   }
 
   return [tag, attrs]
 
 }
 
-const at2e = (jevko) => {
+const jevkoToAttrValue = (jevko) => {
   const {subjevkos, suffix} = jevko
   if (subjevkos.length > 0) throw Error('oops')
   return suffix

@@ -1,5 +1,5 @@
 import {parseJevko} from 'https://cdn.jsdelivr.net/gh/jevko/parsejevko.js@v0.1.3/mod.js'
-import { j2e } from './j2e.js'
+import { jevkoToNodes } from './modAlt.js'
 
 import { jevkoToElements } from './mod.js'
 
@@ -51,7 +51,7 @@ const assert = (...args) => {
 
 assert(document.querySelector('[lang=fr]').textContent === "c'est la vie")
 
-const elems = j2e(parseJevko(`[html][
+const elems = jevkoToNodes(parseJevko(`[html][
   [head][
     [title][This is a title]
   ]
