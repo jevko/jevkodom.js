@@ -21,7 +21,9 @@ export const jevkoToElements = (jevko) => {
       for (const e of elems) {
         if (Array.isArray(e)) {
           const [tag, jevko] = e
-          if (jevko.subjevkos.length > 0) throw Error('Unexpected subjevko in attribute value.')
+          if (jevko.subjevkos.length > 0) throw Error(
+            'Unexpected subjevko in attribute value.'
+          )
           elem.setAttribute(tag, jevko.suffix)
         } else {
           elem.append(e)
