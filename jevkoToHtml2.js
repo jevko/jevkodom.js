@@ -1,4 +1,4 @@
-import {trim3} from 'jevkoutils.js'
+import {trim3} from './deps.js'
 
 export const j2hcolor = (jevko) => {
   const {subjevkos, suffix} = jevko

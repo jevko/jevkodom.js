@@ -1,4 +1,4 @@
-import {trim3} from 'jevkoutils.js'
+import {trim3} from './deps.js'
 
 export const jevkoToHtml = (jevko, klazz = 'value') => {
   const {subjevkos, suffix} = jevko

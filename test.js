@@ -1,4 +1,4 @@
-import {parseJevko} from 'https://cdn.jsdelivr.net/gh/jevko/parsejevko.js@v0.1.3/mod.js'
+import {parseJevko} from './devDeps.js'
 import { jevkoToNodes } from './modAlt.js'
 
 import { jevkoToElements } from './mod.js'

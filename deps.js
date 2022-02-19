@@ -1,1 +1,1 @@
-export * as jevkoutils from 'https://cdn.jsdelivr.net/gh/jevko/jevkoutils.js@v0.1.2/mod.js'
+export {trim3} from 'https://cdn.jsdelivr.net/gh/jevko/jevkoutils.js@v0.1.6/mod.js'

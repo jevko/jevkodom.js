@@ -1,4 +1,4 @@
-import {parseJevko} from 'parsejevko.js'
+import {parseJevko} from './devDeps.js'
 
 import { jevkoToHtml } from './jevkoToHtml.js'
 import { j2h2, j2hcolor } from './jevkoToHtml2.js'

@@ -1,22 +1,24 @@
-export const toElemsById = (ast) => {
+import {trim3} from './deps.js'
+
+export const djevkoToDomNodesById = (jevko) => {
   const byId = Object.create(null)
-  const elems = toElems(ast, byId)
+  const elems = djevkoToDomNodes(jevko, byId)
   return [elems, byId]
 }
 
-export const toElems = (ast, byId = Object.create(null)) => {
-  const {subjevkos, suffix} = ast
+export const djevkoToDomNodes = (jevko, byId = Object.create(null)) => {
+  const {subjevkos, suffix} = jevko
   
-  let ret = []
+  const ret = []
   for (const {prefix, jevko} of subjevkos) {
-    const [pre, tag, post] = trim(prefix)
+    const [pre, tag, post] = trim3(prefix)
     if (pre.length > 0) ret.push(document.createTextNode(pre))
-    if (tag === '') ret.push(...toElems(jevko, byId))
+    if (tag === '') ret.push(...djevkoToDomNodes(jevko, byId))
     else if (tag.endsWith('=')) ret.push([tag.slice(0, -1), jevko])
     else {
       const elem = document.createElement(tag)
 
-      const elems = toElems(jevko, byId)
+      const elems = djevkoToDomNodes(jevko, byId)
 
       for (const e of elems) {
         if (Array.isArray(e)) {
@@ -34,18 +36,4 @@ export const toElems = (ast, byId = Object.create(null)) => {
   }
   ret.push(document.createTextNode(suffix))
   return ret
-}
-const trim = (prefix) => {
-  let i = 0, j = 0
-  for (; i < prefix.length; ++i) {
-    if (isWhitespace(prefix[i]) === false) break
-  }
-  for (j = i; j < prefix.length; ++j) {
-    if (isWhitespace(prefix[j])) break
-  }
-  return [prefix.slice(0, i), prefix.slice(i, j), prefix.slice(j)]
-}
-
-const isWhitespace = (c) => {
-  return ' \n\r\t'.includes(c)
 }

@@ -1,6 +1,4 @@
-import {jevkoutils} from './deps.js'
-
-const {trim3} = jevkoutils
+import {trim3} from './deps.js'
 
 export const jevkoToElements = (jevko) => {
   const {subjevkos, suffix} = jevko
