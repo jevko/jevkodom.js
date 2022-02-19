@@ -1,5 +1,6 @@
 import {trim3} from './deps.js'
 
+// todo: refactor
 export const jevkoToHtml = (jevko, klazz = 'value') => {
   const {subjevkos, suffix} = jevko
 

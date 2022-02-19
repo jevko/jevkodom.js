@@ -1,5 +1,6 @@
 import {trim3} from './deps.js'
 
+// todo: refactor
 export const j2hcolor = (jevko) => {
   const {subjevkos, suffix} = jevko
 

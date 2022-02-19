@@ -1,5 +1,23 @@
 import {trim3} from './deps.js'
 
+/**
+ * Element Jevko (ejevko) is an alternative to DOM Jevko (djevko)
+ * 
+ * Example ejevko:
+ * 
+ * ```
+ * [lang[fr] span][c'est la vie]
+ * ```
+ * 
+ * analogous HTML:
+ * 
+ * ```
+ * <span lang="fr">c'est la vie</span>
+ * ```
+ * 
+ * @param {*} jevko 
+ * @returns 
+ */
 export const ejevkoToDomNodes = (jevko) => {
   const {subjevkos, suffix} = jevko
 
