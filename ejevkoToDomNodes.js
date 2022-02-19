@@ -1,8 +1,24 @@
-import {jevkoutils} from './deps.js'
+import {trim3} from './deps.js'
 
-const { trim3 } = jevkoutils
-
-export const jevkoToNodes = (jevko) => {
+/**
+ * Element Jevko (ejevko) is an alternative to DOM Jevko (djevko)
+ * 
+ * Example ejevko:
+ * 
+ * ```
+ * [lang[fr] span][c'est la vie]
+ * ```
+ * 
+ * analogous HTML:
+ * 
+ * ```
+ * <span lang="fr">c'est la vie</span>
+ * ```
+ * 
+ * @param {*} jevko 
+ * @returns 
+ */
+export const ejevkoToDomNodes = (jevko) => {
   const {subjevkos, suffix} = jevko
 
   let mode = 'text'
@@ -20,7 +36,7 @@ export const jevkoToNodes = (jevko) => {
       for (const [k, v] of attrs) {
         el.setAttribute(k, v)
       }
-      el.append(...jevkoToNodes(jevko))
+      el.append(...ejevkoToDomNodes(jevko))
       ret.push(el)
       mode = 'text'
     }

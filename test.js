@@ -1,7 +1,6 @@
-import {parseJevko} from 'https://cdn.jsdelivr.net/gh/jevko/parsejevko.js@v0.1.3/mod.js'
-import { jevkoToNodes } from './modAlt.js'
+import {parseJevko} from './devDeps.js'
 
-import { jevkoToElements } from './mod.js'
+import { djevkoToDomNodes, ejevkoToDomNodes } from './mod.js'
 
 const jevkoStr = `
 html [
@@ -38,9 +37,7 @@ html [
 
 const parsedJevko = parseJevko(jevkoStr)
 
-const elements = jevkoToElements(parsedJevko)
-
-document.body.append(...elements)
+document.body.append(...djevkoToDomNodes(parsedJevko))
 
 const assert = (...args) => {
   console.assert(...args)
@@ -51,7 +48,7 @@ const assert = (...args) => {
 
 assert(document.querySelector('[lang=fr]').textContent === "c'est la vie")
 
-const elems = jevkoToNodes(parseJevko(`[html][
+const elems = ejevkoToDomNodes(parseJevko(`[html][
   [head][
     [title][This is a title]
   ]
