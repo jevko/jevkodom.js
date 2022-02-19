@@ -22,7 +22,7 @@ const recur = (jevko, byId = Object.create(null)) => {
   // text node
   if (subjevkos.length === 0) return [document.createTextNode(suffix)]
 
-  if (suffix.trim() !== '') throw Error('suffix must be blank')
+  if (suffix.trim() !== '') throw Error(`Unexpected nonblank suffix (${suffix})`)
   
   const ret = []
   for (const {prefix, jevko} of subjevkos) {
