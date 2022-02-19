@@ -1,6 +1,6 @@
 import {trim3} from './deps.js'
 
-export const jevkoToNodes = (jevko) => {
+export const ejevkoToDomNodes = (jevko) => {
   const {subjevkos, suffix} = jevko
 
   let mode = 'text'
@@ -18,7 +18,7 @@ export const jevkoToNodes = (jevko) => {
       for (const [k, v] of attrs) {
         el.setAttribute(k, v)
       }
-      el.append(...jevkoToNodes(jevko))
+      el.append(...ejevkoToDomNodes(jevko))
       ret.push(el)
       mode = 'text'
     }

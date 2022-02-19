@@ -7,33 +7,54 @@ export const djevkoToDomNodesById = (jevko) => {
 }
 
 export const djevkoToDomNodes = (jevko, byId = Object.create(null)) => {
+  const ret = recur(jevko, byId)
+
+  for (const node of ret) {
+    if (Array.isArray(node)) throw Error(`Unexpected top-level attribute (${node[0]})`)
+  }
+
+  return ret
+}
+
+const recur = (jevko, byId = Object.create(null)) => {
   const {subjevkos, suffix} = jevko
+
+  // text node
+  if (subjevkos.length === 0) return [document.createTextNode(suffix)]
+
+  if (suffix.trim() !== '') throw Error('suffix must be blank')
   
   const ret = []
   for (const {prefix, jevko} of subjevkos) {
-    const [pre, tag, post] = trim3(prefix)
-    if (pre.length > 0) ret.push(document.createTextNode(pre))
-    if (tag === '') ret.push(...djevkoToDomNodes(jevko, byId))
-    else if (tag.endsWith('=')) ret.push([tag.slice(0, -1), jevko])
+    const [pre, mid, post] = trim3(prefix)
+
+    // splice/text node
+    if (mid === '') ret.push(...recur(jevko, byId))
+    // attribute
+    else if (mid.endsWith('=')) ret.push([mid.slice(0, -1), jevko])
+    // element
     else {
-      const elem = document.createElement(tag)
+      const element = document.createElement(mid)
 
-      const elems = djevkoToDomNodes(jevko, byId)
+      const nodes = recur(jevko, byId)
 
-      for (const e of elems) {
+      for (const e of nodes) {
         if (Array.isArray(e)) {
-          const [tag, jevko] = e
-          if (jevko.subjevkos.length > 0) throw Error('attrib must be suffix-only')
-          elem.setAttribute(tag, jevko.suffix)
-          if (tag === 'id') byId[jevko.suffix] = elem
+          const [name, jevko] = e
+          if (jevko.subjevkos.length > 0) throw Error(
+            'Unexpected subjevko in attribute value.'
+          )
+          const {suffix} = jevko
+          element.setAttribute(name, suffix)
+          if (name === 'id') byId[suffix] = element
         } else {
-          elem.append(e)
+          element.append(e)
         }
       }
     
-      ret.push(elem)
+      ret.push(element)
     }
   }
-  ret.push(document.createTextNode(suffix))
+
   return ret
 }
