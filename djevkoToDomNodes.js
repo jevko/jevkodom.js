@@ -28,8 +28,10 @@ const recur = (jevko, byId = Object.create(null)) => {
   for (const {prefix, jevko} of subjevkos) {
     const [pre, mid, post] = trim3(prefix)
 
+    // comment (note: a hack)
+    if (mid.startsWith('!')) continue
     // splice/text node
-    if (mid === '') ret.push(...recur(jevko, byId))
+    else if (mid === '') ret.push(...recur(jevko, byId))
     // attribute
     else if (mid.endsWith('=')) ret.push([mid.slice(0, -1), jevko])
     // element
